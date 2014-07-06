@@ -4,7 +4,6 @@
 * Author: Albert Sukmono
 * Description: Single Template Plugin "boxlink" for view content post projectbase
 */
-
 get_header(); ?>
 <div class="container">
         <div class="row">
@@ -53,7 +52,7 @@ get_header(); ?>
 				<table>
 					<tr>
 						<td class="button-demo">
-							<a href="<?php include ('preview.php');?>" target="_blank">
+							<a href="<?php get_template_part( $slug, $name ); ?>" target="_blank">
 							<i class="fa fa-desktop"></i> Live Priview</a>
 						</td>
 					</tr>

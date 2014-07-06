@@ -167,7 +167,7 @@ add_filter( 'template_include',
 // Load Template from themes
 function design_template_function( $template_path ) {
 if ( get_post_type() == 'projectbase' ) {
-	if ( is_single() ) { $template_path = plugin_dir_path( __FILE__ ) .'/single-projectbase.php';}
+	if ( is_single() ) { $template_path = plugin_dir_path( __FILE__ ) .'/preview.php';}
 	if ( is_archive() ) { $template_path = plugin_dir_path( __FILE__ ) .'/archive-projectbase.php';}
 }
 return $template_path;
