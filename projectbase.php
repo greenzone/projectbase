@@ -33,15 +33,15 @@ array(
 
 	'public' => true,
 	'publicly_queryable' => true,
-	'rewrite' => array( 'slug' => 'projectbase','with_front' => false, 'hierarchical' => true),
+	'rewrite' => array( 'slug' => 'projectbase/item','with_front' => false, 'hierarchical' => true),
 	'show_ui' => true,
 	'query_var' => true,
 	'capability_type' => 'post',
 	'menu_position' => 5,
 	'supports' => array( 'title', 'editor', 'comments',	'thumbnail' ),
-	'taxonomies' => array( 'projectbase_archive','projectbase_preview'),
+	'taxonomies' => array( 'projectbase_archive'),
 	'register_meta_box_cb' => 'projectbase_meta_box',
-	'menu_icon' => plugins_url( 'images/favicon.png', __FILE__ ),
+	'menu_icon' => plugins_url( 'asset/favicon.png', __FILE__ ),
 	'has_archive' => true	
 )
 );
@@ -78,22 +78,11 @@ function projectbase_taxonomies() {
 		'exclude_from_search' => false,
         'show_admin_column' => true,
         'query_var'         => true,
-        'rewrite' 			=> array( 'slug' => 'projectbase_archive', 'with_front' => true ),
+        'rewrite' 			=> array( 'slug' => 'projectbase/arsip', 'with_front' => true ),
 		'has_archive' 		=> true
     );
 
     register_taxonomy( 'projectbase_categories', array( 'projectbase' ), $args );
-}
-/* newadd functions */
-add_action('admin_init', 'flush_rewrite_rules');
-add_action('generate_rewrite_rules', 'projectbase_rewrite_rules');
-
-function projectbase_rewrite_rules( $wp_rewrite )
-{
-$new_rules = array(
-'projectbase/(.+)/(.+)' => 'index.php?post_type=' . $wp_rewrite->preg_index(2) . '&projectbase=' .$wp_rewrite->preg_index(1));
-
-$wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
 }
 
 /*
@@ -112,29 +101,22 @@ add_meta_box(
 
 function display_projectbase_meta_box( $projectbase ) {
 // metabox list
+$customer = esc_html( get_post_meta( $projectbase->ID, 'customer', true ) );
+$webclass = esc_html( get_post_meta( $projectbase->ID, 'webclass', true ) );
 $website = esc_html( get_post_meta( $projectbase->ID, 'website', true ) );
-$user_rating = intval( get_post_meta( $projectbase->ID, 'user_rating', true ) );
 ?>
 <table>
 	<tr>
-	<td style="width: 100%">Link Demo</td>
-	<td><input type="text" size="80" name="projectbase_website" value="<?php echo $website; ?>" /></td>
+		<td style="width: 100%">Customer</td>
+		<td><input type="text" size="80" name="projectbase_customer" value="<?php echo $customer; ?>" /></td>
 	</tr>
 	<tr>
-		<td style="width: 150px">Rating</td>
-		<td>
-			<select style="width: 100px" name="projectbase_rating">
-				<?php
-				// Generate all items of drop-down list
-				for ( $rating = 5; $rating >= 1; $rating -- ) {
-				?>
-				<option value="<?php echo $rating; ?>"
-				<?php echo selected( $rating,
-				$user_rating ); ?>>
-				<?php echo $rating; ?> stars
-				<?php } ?>
-			</select>
-		</td>
+		<td style="width: 100%">Webclass</td>
+		<td><input type="text" size="80" name="projectbase_webclass" value="<?php echo $webclass; ?>" /></td>
+	</tr>
+	<tr>
+		<td style="width: 100%">URL Demo</td>
+		<td><input type="text" size="80" name="projectbase_website" value="<?php echo $website; ?>" /></td>
 	</tr>
 </table>
 <?php }
@@ -148,17 +130,23 @@ $projectbase ) {
 if ( $projectbase->post_type == 'projectbase' ) {
 // Store data in post meta table if present in post data
 
+if ( isset( $_POST['projectbase_customer'] ) &&
+$_POST['projectbase_customer'] != '' ) {
+update_post_meta( $projectbase_id, 'customer',
+$_POST['projectbase_customer'] );
+}// Field Customer
+
+if ( isset( $_POST['projectbase_webclass'] ) &&
+$_POST['projectbase_webclass'] != '' ) {
+update_post_meta( $projectbase_id, 'webclass',
+$_POST['projectbase_webclass'] );
+}// Field Webclass
+
 if ( isset( $_POST['projectbase_website'] ) &&
 $_POST['projectbase_website'] != '' ) {
 update_post_meta( $projectbase_id, 'website',
 $_POST['projectbase_website'] );
-}// Field website
-
-if ( isset( $_POST['projectbase_rating'] ) &&
-$_POST['projectbase_rating'] != '' ) {
-update_post_meta( $projectbase_id, 'user_rating',
-$_POST['projectbase_rating'] );
-}
+}// Field Website
 }
 }
 add_filter( 'template_include',
@@ -167,9 +155,10 @@ add_filter( 'template_include',
 // Load Template from themes
 function design_template_function( $template_path ) {
 if ( get_post_type() == 'projectbase' ) {
-	if ( is_single() ) { $template_path = plugin_dir_path( __FILE__ ) .'/preview.php';}
-	if ( is_archive() ) { $template_path = plugin_dir_path( __FILE__ ) .'/archive-projectbase.php';}
+	if ( is_single() ) { $template_path = plugin_dir_path( __FILE__ ) .'/template/single-projectbase.php';}
+	if ( is_archive() ) { $template_path = plugin_dir_path( __FILE__ ) .'/template/archive-projectbase.php';}
 }
 return $template_path;
 }
+
 ?>

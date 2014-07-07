@@ -48,35 +48,24 @@ get_header(); ?>
 						border-radius:4px;
 						cursor: pointer;
 						color:white;}
+					.deskripsi {
+						margin-bottom: 12px;}
 				</style>
+				<!-- Display description "projectbase" contents -->
+				<div class="deskripsi"><i class="fa fa-file-text-o"></i> Deskripsi</div>
+				<div class="entry-content"><?php the_content(); ?></div>
+				<br />
+				<div class="deskripsi"><i class="fa fa-user"></i> Customer : <?php echo esc_html( get_post_meta( get_the_ID(), 'customer', true ) ); ?></div>
+				<div class="deskripsi"><i class="fa fa-globe"></i> Webclass : <?php echo esc_html( get_post_meta( get_the_ID(), 'webclass', true ) ); ?></div>
+				<br />
 				<table>
 					<tr>
 						<td class="button-demo">
-							<a href="<?php get_template_part( $slug, $name ); ?>" target="_blank">
+							<a href="#" target="_blank">
 							<i class="fa fa-desktop"></i> Live Priview</a>
 						</td>
 					</tr>
 				</table>
-				<br />
-				<!-- Display description "projectbase" contents -->
-				<div class="deskripsi-profile">Deskripsi</div>
-				<div class="entry-content"><?php the_content(); ?></div>
-				<br />
-				<tr>
-					<td style="width: 70%">Work Rating</td>
-						<td>: <?php
-								$nb_stars = intval( get_post_meta( get_the_ID(), 'user_rating', true ) );
-								for ( $star_counter = 1; $star_counter <= 5; $star_counter++ ) {
-									if ( $star_counter <= $nb_stars ) {
-										echo '<img src="' . plugins_url( 'projectbase/images/icon.png' ) . '" />';
-									} else {
-										echo '<img src="' . plugins_url( 'projectbase/images/grey.png' ). '" />';
-									}
-								}
-								?>
-						</td>
-				</tr>
-				<br />
 			</div><!--- /.isi-profile --->
 			<?php endwhile; ?>
 		</div><!-- .row content -->

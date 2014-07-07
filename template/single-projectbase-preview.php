@@ -28,8 +28,8 @@
    	<link rel="shortcut icon" href="<?php echo get_option('greenhouse_favicon'); ?>">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<!--load file css and JS on folder plugin -->
-	<link href="<?php echo plugins_url( 'asset/styles-demo.css', __FILE__ );?>" rel="stylesheet" media="all">   
-	<script src="<?php echo plugins_url( 'asset/jquery.min.js', __FILE__ );?>"></script>  
+	<link href="<?php echo plugins_url( '../asset/styles-demo.css', __FILE__ );?>" rel="stylesheet" media="all">   
+	<script src="<?php echo plugins_url( '../asset/jquery.min.js', __FILE__ );?>"></script>  
 
     <?php wp_head(); ?>
 </head>
@@ -48,7 +48,7 @@
 		<div class="inner-switcher">
 			<div id="theme_list">
 				<a href="#">
-				<img class="switcher-logo" src="<?php echo plugins_url( 'asset/gb.png', __FILE__ );?>" alt="logo">
+				<img class="switcher-logo" src="<?php echo plugins_url( '../asset/gb.png', __FILE__ );?>" alt="logo">
 				</a>
 				<div class="clear"></div>
 			</div>	

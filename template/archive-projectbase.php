@@ -91,7 +91,7 @@ get_header(); ?>
                                 <div class="span8">
                             <?php endif; ?>
 									<div style="font-size:20px;border-bottom: solid 1px #ddd;margin-bottom: 10px;padding-bottom: 10px;">
-										<?php the_title();?> : <a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php echo esc_html( get_post_meta( get_the_ID(), 'nama', true ) ); ?></a>
+										<a href="<?php the_permalink(); ?>" title="<?php the_title();?>"><?php the_title();?></a>
 									</div>
                                     <?php echo get_excerpt(555); ?>
                                 </div>
